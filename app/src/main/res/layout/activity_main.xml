@@ -4,33 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#CAFFFF">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="cursive"
+        android:background="@color/button_default"
+        android:fontFamily="casual"
         android:gravity="center_horizontal"
-        android:text="Futebolizando!"
-        android:textColor="@color/black"
+        android:text="O almanaque do futebol!"
+        android:textColor="@color/white"
         android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="413dp"
+        android:layout_height="549dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/play_home_btn"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_bg"
-        android:padding="16dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/button_default"
         android:text="Começar"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <Button
+        android:id="@+id/credits_home_btn"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/button_default"
+        android:text="Créditos"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_home_btn" />
+
+    <Button
+        android:id="@+id/exit_home_btn"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/button_default"
+        android:text="Sair"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/credits_home_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
