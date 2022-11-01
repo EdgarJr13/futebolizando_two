@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.edgarjr.futebolizando.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,11 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.playHomeBtn.setOnClickListener {
             val intent = Intent(this@MainActivity, PlayActivity::class.java)
             startActivity(intent)
+        }
+
+        activityMainBinding.exitHomeBtn.setOnClickListener{
+            this@MainActivity.finish()
+            exitProcess(0)
         }
     }
 
