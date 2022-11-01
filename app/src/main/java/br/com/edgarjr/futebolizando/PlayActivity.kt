@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ class PlayActivity : AppCompatActivity() {
 
     private lateinit var activityPlayBinding: ActivityPlayBinding
     var trollAudio : MediaPlayer? = null
+    var risadaAudio : MediaPlayer? = null
 
     private var countDownTimer: CountDownTimer? = null
     private val countDownMilisegundos: Long = 30000
@@ -189,21 +191,27 @@ class PlayActivity : AppCompatActivity() {
             } else {
                 val checkRadioButton = findViewById<RadioButton>(radiogrp.checkedRadioButtonId)
                 val checkAnswer = checkRadioButton.text.toString()
-                if(checkAnswer == respostas[13]){
+                if(checkAnswer == opcoes[54] || checkAnswer == opcoes[55] || checkAnswer == opcoes[56]) {
+                    erroAlertDialog()
+                    countDownTimer?.cancel()
+                } else
+                if (checkAnswer == respostas[13]){
                     trollAlertDialog()
                     countDownTimer?.cancel()
+                    qIndex++
                 } else if(checkAnswer == respostas[qIndex]) {
                     acertos++
                     txtPlayScore.text = "Pontuação : $acertos"
                     acertoAlertDialog()
                     countDownTimer?.cancel()
+                    qIndex++
                 } else {
                     erros++
                     erroAlertDialog()
                     countDownTimer?.cancel()
+                    qIndex++
                 }
             }
-            qIndex++
         }
     }
 
@@ -247,7 +255,7 @@ class PlayActivity : AppCompatActivity() {
                     tempoRestanteMilisegundos = milisAteTerminar
                     val segundo = TimeUnit.MILLISECONDS.toSeconds(tempoRestanteMilisegundos).toInt()
 
-                    val timer = String.format(Locale.getDefault(), "Time: %02d", segundo)
+                    val timer = String.format(Locale.getDefault(), "Tempo: %02d", segundo)
                     quizTimer.text = timer
 
                     if(tempoRestanteMilisegundos < 10000) {
@@ -286,18 +294,30 @@ class PlayActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this@PlayActivity)
         val view = LayoutInflater.from(this@PlayActivity).inflate(R.layout.wrong_answer, null)
         builder.setView(view)
-
         val tvErroDialogRespCorreta = view.findViewById<TextView>(R.id.tv_wrongDialog)
         val erroOkBtn = view.findViewById<Button>(R.id.wrong_ok)
-        tvErroDialogRespCorreta.text = "Resposta Correta: " + respostas[qIndex]
-        val alertDialog = builder.create()
+        if(qIndex == 13) {
+            tvErroDialogRespCorreta.text = "Pensa bem, bobinho... "
+            playRisadaAudio()
+            val alertDialog = builder.create()
 
-        erroOkBtn.setOnClickListener {
-            tempoRestanteMilisegundos = countDownMilisegundos
-            startCountDownTimer()
-            alertDialog.dismiss()
+            erroOkBtn.setOnClickListener {
+                tempoRestanteMilisegundos = countDownMilisegundos
+                startCountDownTimer()
+                alertDialog.dismiss()
+            }
+            alertDialog.show()
+        } else {
+            tvErroDialogRespCorreta.text = "Resposta Correta: " + respostas[qIndex]
+            val alertDialog = builder.create()
+
+            erroOkBtn.setOnClickListener {
+                tempoRestanteMilisegundos = countDownMilisegundos
+                startCountDownTimer()
+                alertDialog.dismiss()
+            }
+            alertDialog.show()
         }
-        alertDialog.show()
     }
 
     @SuppressLint("SetTextI18n")
@@ -337,5 +357,13 @@ class PlayActivity : AppCompatActivity() {
             trollAudio!!.isLooping = false
             trollAudio!!.start()
         } else trollAudio!!.start()
+    }
+
+    private fun playRisadaAudio() {
+        if (risadaAudio == null) {
+            risadaAudio = MediaPlayer.create(this, R.raw.cggasa)
+            risadaAudio!!.isLooping = false
+            risadaAudio!!.start()
+        } else risadaAudio!!.start()
     }
 }
